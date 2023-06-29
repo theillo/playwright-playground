@@ -1,0 +1,10 @@
+1. przyklad jak dziala snapshot etc test example
+2. test reckitt pokazac 
+3. pokazac jak robic skrypt szybki https://www.youtube.com/watch?v=kyAeH-7lAL4
+    -npm run test 
+4. Playwright wykorzystuje wewnetrznie bilioteke https://github.com/mapbox/pixelmatch?ref=hackernoon.com
+5. Dodatkowe biblioteki ? Percy 
+Najważniejszą opcją jest thresholdopcja, która wskazuje próg dopuszczalnych różnic pomiędzy dwoma obrazami.
+https://hackernoon.com/visual-regression-testing-with-playwright
+6. https://mmazzarolo.com/blog/2022-09-09-visual-regression-testing-with-playwright-and-github-actions/
+7. Pokazac https://trace.playwright.dev/ jak trackowac
