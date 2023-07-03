@@ -36,7 +36,5 @@ test.describe("Desktop tests", () => {
         await expect(page.locator('.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons')).toHaveCSS('display', 'block');
         await expect(page.locator('#show_messages')).toHaveText('Doładowanie wykonane! 40,00PLN na numer 504 xxx xxx');
         await page.getByTestId('close-button').click();
-       
-        
       });
 });
