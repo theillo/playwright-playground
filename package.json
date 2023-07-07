@@ -7,7 +7,9 @@
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
     "test:desktop": "npm run test tests/desktop.spec.ts",
-    "test:desktop:headed": "npm run test tests/desktop.spec.ts -- --headed"
+    "test:desktop:headed": "npm run test tests/desktop.spec.ts -- --headed",
+    "test:payment": "npm run test tests/payment.spec.ts",
+    "test:payment:headed": "npm run test tests/payment.spec.ts -- --headed"
   },
   "keywords": [],
   "author": "",

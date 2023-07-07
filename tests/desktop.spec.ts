@@ -11,7 +11,7 @@ test.describe('Desktop tests', () => {
         await page.getByTestId('password-input').fill(userPassword);
         await page.getByTestId('login-button').click();
     });
-    test.only('quick payment with correct data', async ({ page }) => {
+    test('quick payment with correct data', async ({ page }) => {
         //Arrange
         const receiverID = '2';
         const amoutTransfer = '150';
