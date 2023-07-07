@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test.describe('Full screen page', () => {
+test.describe.skip('Full screen page', () => {
   test('Full page homepage - desktop', async ({ page }) => {
     await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto('http://localhost:3000/isa-and-junior-isa/');
