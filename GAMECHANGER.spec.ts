@@ -20,5 +20,5 @@ function slowLocator(page: Page, waitInMs: number): (...args: any[]) => Locator 
 
         return locator;
     };
-}
+    
 page.locator = slowLocator(page, 500);
