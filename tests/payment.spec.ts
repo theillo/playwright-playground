@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
+import { LoginPage } from '../pages/login.page';
 
 test.describe('payment tests', () => {
     test.beforeEach(async ({ page }) => {
         const userID = loginData.userId;
         const userPassword = loginData.userPassword;
         await page.goto('/');
-        await page.getByTestId('login-input').fill(userID);
-        await page.getByTestId('password-input').fill(userPassword);
-        await page.getByTestId('login-button').click();
+        const loginPage = new LoginPage(page);
+
+        await loginPage.loginInput.fill(userID);
+        await loginPage.passwordInput.fill(userPassword);
+        await loginPage.loginBtn.click();
         await page.getByRole('link', { name: 'płatności' }).click();
     });
-    test('simple payment', async ({ page }) => {
+    test.only('simple payment', async ({ page }) => {
+        //headed debugg slowdown test
         // function slowLocator(page: Page, waitInMs: number): (...args: any[]) => Locator {
         //     // Grab original
         //     const l = page.locator.bind(page);
