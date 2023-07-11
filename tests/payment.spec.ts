@@ -14,7 +14,7 @@ test.describe('payment tests', () => {
         await loginPage.loginBtn.click();
         await page.getByRole('link', { name: 'płatności' }).click();
     });
-    test.only('simple payment', async ({ page }) => {
+    test('simple payment', async ({ page }) => {
         //headed debugg slowdown test
         // function slowLocator(page: Page, waitInMs: number): (...args: any[]) => Locator {
         //     // Grab original
