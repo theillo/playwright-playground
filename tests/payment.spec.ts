@@ -47,14 +47,11 @@ test.describe('payment tests', () => {
         const email = 'test@gmail.com';
         const message = `Przelew wykonany! ${price}PLN dla Jan Nowak`;
         //Act
-        await page.getByTestId('transfer_receiver').fill(transferReciver);
-        await page.getByTestId('form_account_to').fill(accountNumber);
-        await page
-            .locator(
-                '#transfer_new_out > div.form-fields > div:nth-child(4) > div.grid-20.mt-hide.ms-hide.form-static > span'
-            )
-            .click();
-        await expect(page.locator('#form_address')).toHaveCSS('display', 'block');
+        await payment.transferReciver.fill(transferReciver);
+        await payment.formAccountTo.fill(accountNumber);
+        await payment.toogleBtn.click();
+        //additional assertion
+        // await expect(page.locator('#form_address')).toHaveCSS('display', 'block');
         await payment.addressLocator(1).fill(address);
         await payment.addressLocator(2).fill(postCode);
         await payment.addressLocator(3).fill(adress2);

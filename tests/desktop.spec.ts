@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
-import { LoginPage } from '../pages/login.page';
+import { Desktop } from '../pages/desktop.page';
 
 //to invastingationß
 test.describe('Desktop tests', () => {
@@ -9,35 +9,33 @@ test.describe('Desktop tests', () => {
         const userPassword = loginData.userPassword;
         await page.goto('/');
 
-        const loginPage = new LoginPage(page);
-        await loginPage.loginInput.fill(userID);
-        await loginPage.passwordInput.fill(userPassword);
-        await loginPage.loginBtn.click();
-        // await page.getByTestId('login-input').fill(userID);
-        // await page.getByTestId('password-input').fill(userPassword);
-        // await page.getByTestId('login-button').click();
+        const desktop = new Desktop(page);
+        await desktop.loginInput.fill(userID);
+        await desktop.passwordInput.fill(userPassword);
+        await desktop.loginBtn.click();
     });
     test('quick payment with correct data', async ({ page }) => {
+        const desktop = new Desktop(page);
         //Arrange
         const receiverID = '2';
         const amoutTransfer = '150';
         const transferTitle = 'pizza';
         const popupClose =
             '.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons';
-        const initialBalance = await page.locator('#money_value').innerText();
+        const initialBalance = await desktop.moneyValue.innerText();
         const expectedBalance = Number(initialBalance) - Number(amoutTransfer);
         //Act
-        await page.locator('#widget_1_transfer_receiver').selectOption(receiverID);
-        await page.locator('#widget_1_transfer_amount').fill(amoutTransfer);
-        await page.locator('#widget_1_transfer_title').fill(transferTitle);
+        await desktop.wigetLocator('receiver').selectOption(receiverID);
+        await desktop.wigetLocator('amount').fill(amoutTransfer);
+        await desktop.wigetLocator('title').fill(transferTitle);
         await page.getByRole('button', { name: 'wykonaj' }).click();
         // await expect(page.locator('#show_messages')).toHaveText('Przelew wykonany! Chuck Demobankowy - 150,00PLN - pizza')
         await expect(page.locator(popupClose)).toHaveCSS('display', 'block');
         await page.getByTestId('close-button').click();
-        // await page.waitForTimeout(1);
-        await expect(page.locator('#money_value')).toHaveText(`${expectedBalance}`);
+        await expect(desktop.moneyValue).toHaveText(`${expectedBalance}`);
     });
     test('sucesfull mobile top-up', async ({ page }) => {
+        const desktop = new Desktop(page);
         //Arrange
         const phoneNumber = '504 xxx xxx';
         let amountAdded = '40,21';
@@ -49,17 +47,13 @@ test.describe('Desktop tests', () => {
         }
         const expectedMessage = `Doładowanie wykonane! ${amountAdded}PLN na numer ${phoneNumber}`;
         //Act
-        await page.locator('#widget_1_topup_receiver').selectOption(phoneNumber);
-        await page.locator('#widget_1_topup_amount').fill(amountAdded);
-        await page.locator('#uniform-widget_1_topup_agreement span').check();
-        await page.locator('#execute_phone_btn').click();
+        await desktop.wigetLocatorTopup('receiver').selectOption(phoneNumber);
+        await desktop.wigetLocatorTopup('amount').fill(amountAdded);
+        await desktop.uniformWidget.check();
+        await desktop.executePhone.click();
         //Assert
-        await expect(
-            page.locator(
-                '.ui-dialog.ui-widget.ui-widget-content.ui-corner-all.ui-front.ui-dialog-buttons'
-            )
-        ).toHaveCSS('display', 'block');
-        await expect(page.locator('#show_messages')).toHaveText(expectedMessage);
-        await page.getByTestId('close-button').click();
+        await expect(desktop.toogleBtn).toHaveCSS('display', 'block')
+        await expect(desktop.showMessage).toHaveText(expectedMessage);
+        await desktop.closeBtn.click();
     });
 });
