@@ -1,43 +1,41 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
-import { LoginPage } from '../pages/login.page';
+import { Payment } from '../pages/payment.page';
 
 test.describe('payment tests', () => {
     test.beforeEach(async ({ page }) => {
         const userID = loginData.userId;
         const userPassword = loginData.userPassword;
         await page.goto('/');
-        const loginPage = new LoginPage(page);
+        const payment = new Payment(page);
 
-        await loginPage.loginInput.fill(userID);
-        await loginPage.passwordInput.fill(userPassword);
-        await loginPage.loginBtn.click();
-        await page.getByRole('link', { name: 'płatności' }).click();
+        await payment.loginInput.fill(userID);
+        await payment.passwordInput.fill(userPassword);
+        await payment.loginBtn.click();
+
+        // await page.getByRole('link', { name: 'płatności' }).click();
+        await page.locator('#payments_btn').click();
     });
     test.only('simple payment', async ({ page }) => {
+        const payment = new Payment(page);
         //headed debugg slowdown test
         // function slowLocator(page: Page, waitInMs: number): (...args: any[]) => Locator {
-        //     // Grab original
         //     const l = page.locator.bind(page);
-
-        //     // Return a new function that uses the original locator but remaps certain functions
         //     return (locatorArgs) => {
         //         const locator = l(locatorArgs);
-
         //         locator.click = async (args) => {
         //             await new Promise((r) => setTimeout(r, waitInMs));
         //             return l(locatorArgs).click(args);
         //         };
-
         //         locator.fill = async (args) => {
         //             await new Promise((r) => setTimeout(r, waitInMs));
         //             return l(locatorArgs).fill(args);
         //         };
-
         //         return locator;
         //     };
         // }
         // page.locator = slowLocator(page, 500);
+
         //Arrange
         const transferReciver = 'Jan Nowak';
         const accountNumber = '11 2232 4442 2123 1232 1234 2312';
@@ -57,18 +55,18 @@ test.describe('payment tests', () => {
             )
             .click();
         await expect(page.locator('#form_address')).toHaveCSS('display', 'block');
-        await page.locator('#form_receiver_address1').fill(address);
-        await page.locator('#form_receiver_address2').fill(postCode);
-        await page.locator('#form_receiver_address3').fill(adress2);
-        await page.getByTestId('form_amount').fill(price);
-        await page.getByTestId('form_title').fill(transferTitle);
-        await page.locator('#uniform-form_is_email span').click();
-        await page.locator('#form_email').fill(email);
-        await page.locator('#uniform-form_add_receiver span').click();
-        await page.locator('#form_trusted').check();
-        await page.locator('#execute_btn').click();
-        await page.getByTestId('close-button').click();
+        await payment.addressLocator(1).fill(address);
+        await payment.addressLocator(2).fill(postCode);
+        await payment.addressLocator(3).fill(adress2);
+        await payment.formAmount.fill(price);
+        await payment.formTitle.fill(transferTitle);
+        await payment.uniformEmail.click();
+        await payment.formEmail.fill(email);
+        await payment.formReciver.click();
+        await payment.formTrusted.check();
+        await payment.exectuteBtn.click();
+        await payment.closeBtn.click();
         //Assert
-        await expect(page.getByTestId('message-text')).toHaveText(message);
+        await expect(payment.messageText).toHaveText(message);
     });
 });
