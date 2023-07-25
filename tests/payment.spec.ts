@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { Payment } from '../pages/payment.page';
 import { LoginPage } from '../pages/login.page';
+import { Desktop } from '../pages/desktop.page';
 
 test.describe('payment tests', () => {
     test.beforeEach(async ({ page }) => {
@@ -14,10 +15,13 @@ test.describe('payment tests', () => {
         await login.passwordInput.fill(userPassword);
         await login.loginBtn.click();
 
+        const desktop = new Desktop(page);
+
+        await desktop.sideMenu.paymentButton.click();
         // await page.getByRole('link', { name: 'płatności' }).click();
-        await page.locator('#payments_btn').click();
+        // await page.locator('#payments_btn').click();
     });
-    test.only('simple payment', async ({ page }) => {
+    test('simple payment', async ({ page }) => {
         const payment = new Payment(page);
         //headed debugg slowdown test
         // function slowLocator(page: Page, waitInMs: number): (...args: any[]) => Locator {
@@ -50,12 +54,12 @@ test.describe('payment tests', () => {
         //Act
         await payment.transferReciver.fill(transferReciver);
         await payment.formAccountTo.fill(accountNumber);
-        await payment.toogleBtn.click();
+        // await payment.toogleBtn.click();
         //additional assertion
         // await expect(page.locator('#form_address')).toHaveCSS('display', 'block');
-        await payment.addressLocator(1).fill(address);
-        await payment.addressLocator(2).fill(postCode);
-        await payment.addressLocator(3).fill(adress2);
+        // await payment.addressLocator(1).fill(address);
+        // await payment.addressLocator(2).fill(postCode);
+        // await payment.addressLocator(3).fill(adress2);
         await payment.formAmount.fill(price);
         await payment.formTitle.fill(transferTitle);
         await payment.uniformEmail.click();
