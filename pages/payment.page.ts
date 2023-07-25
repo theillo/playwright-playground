@@ -8,7 +8,9 @@ export class Payment {
     loginBtn = this.page.getByTestId('login-button');
     transferReciver = this.page.getByTestId('transfer_receiver');
     formAccountTo = this.page.getByTestId('form_account_to');
-    toogleBtn = this.page.locator('#transfer_new_out > div.form-fields > div:nth-child(4) > div.grid-20.mt-hide.ms-hide.form-static > span');
+    toogleBtn = this.page.locator(
+        '#transfer_new_out > div.form-fields > div:nth-child(4) > div.grid-20.mt-hide.ms-hide.form-static > span'
+    );
     addressLocator(nrAddress: number) {
         return this.page.locator(`#form_receiver_address${nrAddress}`);
     }

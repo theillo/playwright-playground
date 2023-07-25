@@ -2,9 +2,10 @@ import { Page } from '@playwright/test';
 
 export class Desktop {
     constructor(private page: Page) {}
-    loginInput = this.page.getByTestId('login-input');
-    passwordInput = this.page.getByTestId('password-input');
-    loginBtn = this.page.getByTestId('login-button');
+    // loginInput = this.page.getByTestId('login-input');
+    // passwordInput = this.page.getByTestId('password-input');
+    // loginBtn = this.page.getByTestId('login-button');
+    
     moneyValue = this.page.locator('#money_value');
     wigetLocator(wigetType: string) {
         return this.page.locator(`#widget_1_transfer_${wigetType}`);

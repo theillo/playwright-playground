@@ -1,6 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { loginData } from '../test-data/login.data';
 import { Desktop } from '../pages/desktop.page';
+import { LoginPage } from '../pages/login.page';
+
 
 //to invastingationß
 test.describe('Desktop tests', () => {
@@ -9,10 +11,10 @@ test.describe('Desktop tests', () => {
         const userPassword = loginData.userPassword;
         await page.goto('/');
 
-        const desktop = new Desktop(page);
-        await desktop.loginInput.fill(userID);
-        await desktop.passwordInput.fill(userPassword);
-        await desktop.loginBtn.click();
+        const login = new LoginPage(page);
+        await login.loginInput.fill(userID);
+        await login.passwordInput.fill(userPassword);
+        await login.loginBtn.click();
     });
     test('quick payment with correct data', async ({ page }) => {
         const desktop = new Desktop(page);
