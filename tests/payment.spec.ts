@@ -6,17 +6,13 @@ import { Desktop } from '../pages/desktop.page';
 
 test.describe('payment tests', () => {
     test.beforeEach(async ({ page }) => {
+        const loginPage = new LoginPage(page);
+        const desktop = new Desktop(page);
+
         const userID = loginData.userId;
         const userPassword = loginData.userPassword;
         await page.goto('/');
-        const login = new LoginPage(page);
-
-        await login.loginInput.fill(userID);
-        await login.passwordInput.fill(userPassword);
-        await login.loginBtn.click();
-
-        const desktop = new Desktop(page);
-
+        await loginPage.login(userID, userPassword);
         await desktop.sideMenu.paymentButton.click();
         // await page.getByRole('link', { name: 'płatności' }).click();
         // await page.locator('#payments_btn').click();
