@@ -4,7 +4,7 @@ import { SideMenuComponent } from '../components/side-menu.components';
 export class Desktop {
     constructor(private page: Page) {}
 
-    sideMenu = new SideMenuComponent(this.page)
+    sideMenu = new SideMenuComponent(this.page);
     moneyValue = this.page.locator('#money_value');
     wigetLocator(wigetType: string) {
         return this.page.locator(`#widget_1_transfer_${wigetType}`);
@@ -19,4 +19,11 @@ export class Desktop {
     );
     showMessage = this.page.locator('#show_messages');
     closeBtn = this.page.getByTestId('close-button');
+
+    async executeMobileTopUp(phoneNumber: string, amountAdded: string): Promise<void> {
+        await this.wigetLocatorTopup('receiver').selectOption(phoneNumber);
+        await this.wigetLocatorTopup('amount').fill(amountAdded);
+        await this.uniformWidget.check();
+        await this.executePhone.click();
+    }
 }

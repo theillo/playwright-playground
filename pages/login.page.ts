@@ -8,9 +8,14 @@ export class LoginPage {
     loginBtn = this.page.getByTestId('login-button');
     loginError = this.page.getByTestId('error-login-id');
     passwordError = this.page.getByTestId('error-login-password');
-    async login(userID: string, userPassword: string): Promise<void> {
+    async login(userID: string, userPassword: string, clickLoginBtn: boolean = true): Promise<void> {
         await this.loginInput.fill(userID);
         await this.passwordInput.fill(userPassword);
-        await this.loginBtn.click();
+
+        if (clickLoginBtn) {
+            await this.loginBtn.click();
+        } else {
+            await this.passwordInput.blur();
+        }
     }
 }

@@ -48,22 +48,7 @@ test.describe('payment tests', () => {
         const email = 'test@gmail.com';
         const message = `Przelew wykonany! ${price}PLN dla Jan Nowak`;
         //Act
-        await payment.transferReciver.fill(transferReciver);
-        await payment.formAccountTo.fill(accountNumber);
-        // await payment.toogleBtn.click();
-        //additional assertion
-        // await expect(page.locator('#form_address')).toHaveCSS('display', 'block');
-        // await payment.addressLocator(1).fill(address);
-        // await payment.addressLocator(2).fill(postCode);
-        // await payment.addressLocator(3).fill(adress2);
-        await payment.formAmount.fill(price);
-        await payment.formTitle.fill(transferTitle);
-        await payment.uniformEmail.click();
-        await payment.formEmail.fill(email);
-        await payment.formReciver.click();
-        await payment.formTrusted.check();
-        await payment.exectuteBtn.click();
-        await payment.closeBtn.click();
+        await payment.sendPayment(transferReciver, accountNumber, price, transferTitle, email);
         //Assert
         await expect(payment.messageText).toHaveText(message);
     });

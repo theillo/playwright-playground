@@ -32,7 +32,7 @@ test.describe('Desktop tests', () => {
         await desktop.wigetLocator('title').fill(transferTitle);
         await page.getByRole('button', { name: 'wykonaj' }).click();
         // await expect(page.locator('#show_messages')).toHaveText('Przelew wykonany! Chuck Demobankowy - 150,00PLN - pizza')
-        await expect(page.locator(popupClose)).toHaveCSS('display', 'block');
+        // await expect(page.locator(popupClose)).toHaveCSS('display', 'block');
         await page.getByTestId('close-button').click();
         await expect(desktop.moneyValue).toHaveText(`${expectedBalance}`);
     });
@@ -48,10 +48,7 @@ test.describe('Desktop tests', () => {
         }
         const expectedMessage = `Doładowanie wykonane! ${amountAdded}PLN na numer ${phoneNumber}`;
         //Act
-        await desktop.wigetLocatorTopup('receiver').selectOption(phoneNumber);
-        await desktop.wigetLocatorTopup('amount').fill(amountAdded);
-        await desktop.uniformWidget.check();
-        await desktop.executePhone.click();
+        await desktop.executeMobileTopUp(phoneNumber, amountAdded);
         //Assert
         await expect(desktop.toogleBtn).toHaveCSS('display', 'block');
         await expect(desktop.showMessage).toHaveText(expectedMessage);

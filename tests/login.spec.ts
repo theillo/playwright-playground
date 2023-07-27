@@ -36,9 +36,10 @@ test.describe('login tests cases', () => {
         const wrongPassword = '32';
         const expectedErrorMsgforPassword = 'hasło ma min. 8 znaków';
         //Act
-        await loginPage.loginInput.fill(userId);
-        await loginPage.passwordInput.fill(wrongPassword);
-        await loginPage.passwordInput.blur(); //remove focus from input
+        await loginPage.login(userId, wrongPassword, false);
+        // await loginPage.loginInput.fill(userId);
+        // await loginPage.passwordInput.fill(wrongPassword);
+        // await loginPage.passwordInput.blur(); //remove focus from input
 
         //Assert
         await expect(loginPage.passwordError).toHaveText(expectedErrorMsgforPassword);
