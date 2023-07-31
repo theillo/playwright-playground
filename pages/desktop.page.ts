@@ -26,4 +26,15 @@ export class Desktop {
         await this.uniformWidget.check();
         await this.executePhone.click();
     }
+    async quickPayment(
+        receiverID: string,
+        amoutTransfer: string,
+        transferTitle: string
+    ): Promise<void> {
+        await this.wigetLocator('receiver').selectOption(receiverID);
+        await this.wigetLocator('amount').fill(amoutTransfer);
+        await this.wigetLocator('title').fill(transferTitle);
+        await this.page.getByRole('button', { name: 'wykonaj' }).click();
+        await this.page.getByTestId('close-button').click();
+    }
 }

@@ -27,13 +27,9 @@ test.describe('Desktop tests', () => {
         const initialBalance = await desktop.moneyValue.innerText();
         const expectedBalance = Number(initialBalance) - Number(amoutTransfer);
         //Act
-        await desktop.wigetLocator('receiver').selectOption(receiverID);
-        await desktop.wigetLocator('amount').fill(amoutTransfer);
-        await desktop.wigetLocator('title').fill(transferTitle);
-        await page.getByRole('button', { name: 'wykonaj' }).click();
-        // await expect(page.locator('#show_messages')).toHaveText('Przelew wykonany! Chuck Demobankowy - 150,00PLN - pizza')
-        // await expect(page.locator(popupClose)).toHaveCSS('display', 'block');
-        await page.getByTestId('close-button').click();
+        await desktop.quickPayment(receiverID, amoutTransfer, transferTitle);
+
+        //Assert
         await expect(desktop.moneyValue).toHaveText(`${expectedBalance}`);
     });
     test('sucesfull mobile top-up', async ({ page }) => {
