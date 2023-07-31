@@ -23,4 +23,22 @@ export class Payment {
     exectuteBtn = this.page.locator('#execute_btn');
     closeBtn = this.page.getByTestId('close-button');
     messageText = this.page.getByTestId('message-text');
+    async sendPayment(
+        transferReciver: string,
+        accountNumber: string,
+        price: string,
+        transferTitle: string,
+        email: string
+    ): Promise<void> {
+        await this.transferReciver.fill(transferReciver);
+        await this.formAccountTo.fill(accountNumber);
+        await this.formAmount.fill(price);
+        await this.formTitle.fill(transferTitle);
+        await this.uniformEmail.click();
+        await this.formEmail.fill(email);
+        await this.formReciver.click();
+        await this.formTrusted.check();
+        await this.exectuteBtn.click();
+        await this.closeBtn.click();
+    }
 }

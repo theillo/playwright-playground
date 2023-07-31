@@ -3,19 +3,19 @@ import { loginData } from '../test-data/login.data';
 import { LoginPage } from '../pages/login.page';
 
 test.describe('login tests cases', () => {
+    let loginPage: LoginPage;
+
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
+        loginPage = new LoginPage(page);
     });
     test('login with correct credentials', async ({ page }) => {
         //Arrange
         const userId = loginData.userId;
         const userPassword = loginData.userPassword;
         const expectedUserName = 'Jan Demobankowy';
-        const loginPage = new LoginPage(page);
         //Act
-        await loginPage.loginInput.fill(userId);
-        await loginPage.passwordInput.fill(userPassword);
-        await loginPage.loginBtn.click();
+        await loginPage.login(userId, userPassword);
         //Assert
         await expect(page.getByTestId('user-name')).toHaveText(expectedUserName);
     });
@@ -25,7 +25,6 @@ test.describe('login tests cases', () => {
         const incorrectNickname = 'test';
         const expectedErrorMsg = 'identyfikator ma min. 8 znaków';
         //Act
-        const loginPage = new LoginPage(page);
         await loginPage.loginInput.fill(incorrectNickname);
         await loginPage.passwordInput.click();
         //Assert
@@ -37,10 +36,10 @@ test.describe('login tests cases', () => {
         const wrongPassword = '32';
         const expectedErrorMsgforPassword = 'hasło ma min. 8 znaków';
         //Act
-        const loginPage = new LoginPage(page);
-        await loginPage.loginInput.fill(userId);
-        await loginPage.passwordInput.fill(wrongPassword);
-        await loginPage.passwordInput.blur(); //remove focus from input
+        await loginPage.login(userId, wrongPassword, false);
+        // await loginPage.loginInput.fill(userId);
+        // await loginPage.passwordInput.fill(wrongPassword);
+        // await loginPage.passwordInput.blur(); //remove focus from input
 
         //Assert
         await expect(loginPage.passwordError).toHaveText(expectedErrorMsgforPassword);
