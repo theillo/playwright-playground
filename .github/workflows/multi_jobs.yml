@@ -1,0 +1,39 @@
+name: Multi jobs
+on:
+  push:
+        branches: [ main ]
+  pull_request:
+        branches: [ main ]
+jobs:
+     
+  setup:
+     runs-on: ubuntu-latest
+    
+     steps:
+        - uses: actions/checkout@v2
+        - name: Run a one-line script
+          run: echo setup job!
+        - name: Run python hello.py
+          run: python hello.py
+     
+  test:
+     needs: [setup]
+     runs-on: ubuntu-latest
+    
+     steps:
+        - uses: actions/checkout@v2
+        - name: Run a one-line script
+          run: echo test job!
+        - name: Run python hello.py
+          run: python hello.py
+     
+  deploy:
+     needs: [test]
+     runs-on: ubuntu-latest
+    
+     steps:
+        - uses: actions/checkout@v2
+        - name: Run a one-line script
+          run: echo deploy job!
+        - name: Run python hello.py
+          run: python hello.py
