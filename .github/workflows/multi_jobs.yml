@@ -14,7 +14,7 @@ jobs:
         - name: Run a one-line script
           run: echo setup job!
         - name: Run python hello.py
-          run: python hello2.py
+          run: python hello.py
      
   test:
      needs: [setup]
@@ -29,7 +29,7 @@ jobs:
      
   deploy:
      needs: [test]
-     if: ${{ always() }}
+     if: ${{ success() }}
      runs-on: ubuntu-latest
     
      steps:
