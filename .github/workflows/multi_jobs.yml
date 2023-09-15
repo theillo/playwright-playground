@@ -21,6 +21,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Check system
+        run: |
+          cat /etc/os-release
+          google-chrome --version
+          chromedriver --version
+          python --version
+          python3 --version
       - name: Run a one-line script
         run: echo test job!
       - name: Run python hello.py
@@ -33,6 +40,13 @@ jobs:
       image: jaktestowac/python-chromedriver:3.6-xvfb
     steps:
       - uses: actions/checkout@v2
+      - name: Check system
+        run: |
+          cat /etc/os-release
+          google-chrome --version
+          chromedriver --version
+          python --version
+          python3 --version
       - name: Run a one-line script
         run: echo test job!
       - name: Run python hello.py
