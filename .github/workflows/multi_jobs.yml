@@ -1,40 +1,51 @@
 name: Multi jobs
 on:
   push:
-        branches: [ main ]
+    branches: [ main ]
   pull_request:
-        branches: [ main ]
+    branches: [ main ]
 jobs:
      
   setup:
-     runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
     
-     steps:
-        - uses: actions/checkout@v2
-        - name: Run a one-line script
-          run: echo setup job!
-        - name: Run python hello.py
-          run: python hello.py
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo setup job!
+      - name: Run python hello.py
+        run: python hello.py
      
   test:
-     needs: [setup]
-     runs-on: ubuntu-latest
-    
-     steps:
-        - uses: actions/checkout@v2
-        - name: Run a one-line script
-          run: echo test job!
-        - name: Run python hello.py
-          run: python hello.py
+    needs: [setup]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo test job!
+      - name: Run python hello.py
+        run: python hello.py
+     
+  testImage:
+    needs: [setup]
+    runs-on: ubuntu-latest
+    container:
+      image: jaktestowac/python-chromedriver:3.6-xvfb
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo test job!
+      - name: Run python hello.py
+        run: python hello.py
      
   deploy:
-     needs: [test]
-     if: ${{ success() }}
-     runs-on: ubuntu-latest
+      needs: [test]
+      if: ${{ always() }}
+      runs-on: ubuntu-latest
     
-     steps:
-        - uses: actions/checkout@v2
-        - name: Run a one-line script
-          run: echo deploy job!
-        - name: Run python hello.py
-          run: python hello.py
+      steps:
+      - uses: actions/checkout@v2
+      - name: Run a one-line script
+        run: echo deploy job!
+      - name: Run python hello.py
+        run: python hello.py
