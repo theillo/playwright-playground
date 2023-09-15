@@ -13,8 +13,8 @@ jobs:
         - uses: actions/checkout@v2
         - name: Run a one-line script
           run: echo setup job!
-        - name: Run python hello2.py
-          run: python hello.py
+        - name: Run python hello.py
+          run: python hello2.py
      
   test:
      needs: [setup]
